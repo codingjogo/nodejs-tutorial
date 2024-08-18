@@ -9,4 +9,6 @@ const posts = [
     }
 ]
 
-export const getPosts = () => posts;
+const getPosts = () => posts;
+
+export default getPosts;
