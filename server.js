@@ -1,5 +1,10 @@
 import http from 'http';
+import url from 'url';
 const PORT = 8000;
+
+// Get current path
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = import.meta.dirname;
 
 const server = http.createServer((req, res) => {
     try {
@@ -27,4 +32,6 @@ const server = http.createServer((req, res) => {
 
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
+    console.log(__filename);
+    console.log(__dirname);
 })
