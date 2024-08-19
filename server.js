@@ -2,15 +2,20 @@ import http from 'http';
 const PORT = 8000;
 
 const server = http.createServer((req, res) => {
-    // npm modules: The free npm Registry has become the center of JavaScript code sharing, and with more than two million packages, the largest software registry in the world
+    // check URL path from Client
+    // then show a response like HTML file 👇
 
-    // This is how you secure API keys
-    console.log('API KEY: ' + process.env.PRIVATE_KEY);
-
-    // To run code above 👆 you should add this command "--env-file=.env" to your script in package.json
-
-    res.writeHead(200, { 'Content-Type' : 'application/json'})
-    res.end(JSON.stringify({message: 'Server Status is "OK"'}))
+    // You can check this routes through "Thunder Client" Extension in VS Code
+    if (req.url === '/') {
+        res.writeHead(200, {'Content-Type' : 'text/html'});
+        res.end('<h1>Home Page</h1>');
+    } else if (req.url === '/about') {
+        res.writeHead(200, {'Content-Type' : 'text/html'});
+        res.end('<h1>About Page</h1>');
+    } else {
+        res.writeHead(404, {'Content-Type' : 'text/html'});
+        res.end('<h1>Not Found Page</h1>');
+    }
 })
 
 server.listen(PORT, () => {
