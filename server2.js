@@ -44,6 +44,23 @@ const handleInvalidMethodRequest = (req, res) => {
 	res.end();
 };
 
+const handleCreateUser = (req, res) => {
+	let body = '';
+
+	req.on('data', (chunk) => {
+		body += chunk.toString();
+	})
+
+	req.on('end', () => {
+		const newUser = JSON.parse(body);
+		posts.push(newUser);
+		res.statusCode = 201; // successful response code
+		res.write(JSON.stringify(newUser));
+		res.end();
+	})
+
+}
+
 const server = createServer((req, res) => {
 	loggerMiddleware(req, res, () => {
 		jsonMiddleware(req, res, () => {
@@ -54,6 +71,8 @@ const server = createServer((req, res) => {
 				req.method === "GET"
 			) {
 				handleGetUserById(req, res);
+			} else if (req.url === '/api/posts' && req.method === 'POST') {
+				handleCreateUser(req, res);
 			} else {
 				handleInvalidMethodRequest(req, res);
 			}
